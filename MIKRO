@@ -1,0 +1,7 @@
+echo "# mikro" >> README.md
+git init
+git agrega README.md
+git commit -m "primera confirmación"
+rama git -M principal
+git remoto agregar origen https://github.com/prostudiosmikro/mikro.git
+git push -u origen principal
