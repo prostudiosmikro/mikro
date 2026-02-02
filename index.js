@@ -1,56 +1,56 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require("socket.io");
-const { WebcastPushConnection } = require('tiktok-live-connector');
+const expreso = requerir('expreso');
+const http = requerir('http');
+const { Servidor } = requerir("socket.io");
+const { Conexión WebcastPush } = requerir('conector en vivo de TikTok');
 
-const app = express();
-const server = http.createServer(app);
-// Configuramos Socket.io para permitir conexiones desde cualquier sitio (CORS)
-const io = new Server(server, {
+const app = expreso();
+const servidor = http.crearServidor(app);
+// Configuramos Socket.io para permitir conexiones desde cual sitio (CORS)
+const io = nuevo Servidor(servidor, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origen: "*",
+        métodos: [„CONSEGUIR", "POST"]
     }
 });
 
-const port = process.env.PORT || 3000;
-let tiktokUsername = "mae_gmy"; 
-let connection = new WebcastPushConnection(tiktokUsername);
+const puerto = proceso.env.PUERTO || 3000;
+dejar nombre de usuario de tiktok = "maiky.ramirez12"; 
+dejar conexión = nuevo Conexión WebcastPush(nombre de usuario de tiktok);
 
 // Conexión a TikTok
-connection.connect().then(state => {
-    console.info(`✅ Conectado al live de ${state.roomId}`);
-}).catch(err => {
-    console.error('❌ Error al conectar:', err);
+conexión.conectar().entonces(estado => {
+    consola.información(`✅ Conectado al live de ${estado.ID de habitación}`);
+}).atrapar(err => {
+    consola.error('❌ Error al conectar:', err);
 });
 
-// EVENTO: Regalos (Se muestra en consola y se envía a la API/Socket)
-connection.on('gift', (data) => {
-    console.log(`🎁 ¡${data.uniqueId} mandó un ${data.giftName}!`);
+// EVENTO: Regalos (Se muerte en consola y se envi a la API/Socket)
+conexión.en('regalo', (datos) => {
+    consola.registro(`🎁 ¡${datos.Id único} mandó un ${datos.nombre del regalo}!`);
     // Emitimos el evento para que tu web lo reciba
-    io.emit('nuevo_regalo', {
-        user: data.uniqueId,
-        gift: data.giftName,
-        count: data.repeatCount,
-        image: data.giftPictureUrl
+    io.emitir('nuevo_regalo', {
+        usuario: datos.Id único,
+        regalo: datos.nombre del regalo,
+        contar: datos.repetirConteo,
+        imagen: datos.URL de imagen de regalo
     });
 });
 
-// EVENTO: Chat (Se muestra en consola y se envía al Socket)
-connection.on('chat', data => {
-    console.log(`💬 ${data.uniqueId}: ${data.comment}`);
-    io.emit('nuevo_mensaje', {
-        user: data.uniqueId,
-        msg: data.comment
+// EVENTO: Chat (Se muerte en consola y se enviaba al Socket)
+conexión.en('chat', datos => {
+    consola.registro(`💬 ${datos.Id único}: ${datos.comentario}`);
+    io.emitir('nuevo_mensaje', {
+        usuario: datos.Id único,
+        mensaje: datos.comentario
     });
 });
 
-// Ruta principal para verificar que el servidor vive
+// Ruta principal para verificar que el servidor viva
 app.get('/', (req, res) => {
-    res.send('Servidor Mikro TikTok con API Socket Activo 🚀');
+    res.enviar('Servidor Mikro TikTok con API Socket Activo 🚀');
 });
 
 // Importante: Usamos server.listen en lugar de app.listen para Socket.io
-server.listen(port, () => {
-    console.log(`🚀 Servidor corriendo en puerto ${port}`);
+servidor.escuchar(puerto, () => {
+    consola.registro(`🚀 Servidor corriendo en puerto ${puerto}`);
 });
