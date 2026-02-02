@@ -1,7 +1,7 @@
 {
-  "name": "cibergol-tiktok-bot",
+  "name": "mikro-tiktok",
   "version": "1.0.0",
-  "description": "Conector de TikTok Live para Heroku",
+  "description": "TikTok Connector para Mikropublisher",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
