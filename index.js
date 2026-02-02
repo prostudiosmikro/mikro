@@ -4,7 +4,7 @@ const app = expreso();
 const puerto = proceso.env.PUERTO || 3000;
 
 // Reemplaza con tu usuario de TikTok (ej. "@cibergol")
-dejar nombre de usuario de tiktok = „TU_USUARIO"; 
+dejar nombre de usuario de tiktok = „@losjuegosdelprofe"; 
 dejar conexión = nuevo Conexión TikTok en vivo(nombre de usuario de tiktok);
 
 conexión.conectar().entonces(estado => {
