@@ -1,13 +1,13 @@
 {
-  "name": "mikro-tiktok",
+  "name": "mikro-tiktok-api",
   "version": "1.0.0",
-  "description": "TikTok Connector para Mikropublisher",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
+    "socket.io": "^4.7.2",
     "tiktok-live-connector": "latest"
   }
 }
