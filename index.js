@@ -14,7 +14,7 @@ const io = new Server(server, {
 });
 
 const port = process.env.PORT || 3000;
-let tiktokUsername = "losjuegosdelprofe"; 
+let tiktokUsername = "mae_gmy"; 
 let connection = new WebcastPushConnection(tiktokUsername);
 
 // Conexión a TikTok
