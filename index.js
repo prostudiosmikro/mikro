@@ -1,29 +1,28 @@
-const expreso = requerir('expreso');
-const { Conexión TikTok en vivo } = requerir('conector en vivo de TikTok'); // La libertad clave
-const app = expreso();
-const puerto = proceso.env.PUERTO || 3000;
+const express = require('express');
+const { WebcastPushConnection } = require('tiktok-live-connector');
+const app = express();
+const port = process.env.PORT || 3000;
 
-// Reemplaza con tu usuario de TikTok (ej. "@cibergol")
-dejar nombre de usuario de tiktok = „@losjuegosdelprofe"; 
-dejar conexión = nuevo Conexión TikTok en vivo(nombre de usuario de tiktok);
+// Tu usuario de TikTok (asegúrate de que esté bien escrito)
+let tiktokUsername = "losjuegosdelprofe"; 
+let connection = new WebcastPushConnection(tiktokUsername);
 
-conexión.conectar().entonces(estado => {
-    consola.información(`Conectado al live de ${estado.ID de habitación}`);
-}).atrapar(err => {
-    consola.error('Error al conectar:', err);
+connection.connect().then(state => {
+    console.info(`Conectado al live de ${state.roomId}`);
+}).catch(err => {
+    console.error('Error al conectar:', err);
 });
 
-// EVENTO: Cuando alguien te enviaba un regalo
-conexión.en('regalo', (datos) => {
-    consola.registro(`¡${datos.Id único} mandó un ${datos.nombre del regalo}!`);
-    // Aquí puedes meter lógica: si es Rosa, dispara un sonido
+// EVENTO: Regalos
+connection.on('gift', (data) => {
+    console.log(`¡${data.uniqueId} mandó un ${data.giftName}!`);
 });
 
 // EVENTO: Chat
-conexión.en('chat', datos => {
-    consola.registro(`${datos.Id único} dijo: ${datos.comentario}`);
+connection.on('chat', data => {
+    console.log(`${data.uniqueId} dijo: ${data.comment}`);
 });
 
-// Servidor básico para que Heroku no dé error R10
-app.get('/', (req, res) => res.enviar('API de TikTok de Cibergol Funcionando 🚀'));
-app.escuchar(puerto, () => consola.registro(`Puerto: ${puerto}`));
+// Servidor para Heroku
+app.get('/', (req, res) => res.send('API de TikTok de Cibergol Funcionando 🚀'));
+app.listen(port, () => console.log(`Servidor activo en puerto: ${port}`));
